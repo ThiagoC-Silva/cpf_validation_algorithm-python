@@ -1,3 +1,12 @@
+def validate_cpf():
+    if cpf == verified_cpf:
+        print('Valid CPF')
+    else:
+        print('Invalid CPF')
+
+    print('Provided CPF:', cpf)
+    print('Verifield CPF:', verified_cpf)
+
 def get_check_digit(remainder):
     if remainder < 2:
         return 0
@@ -5,11 +14,12 @@ def get_check_digit(remainder):
     return 11 - remainder
 
 def calculate_digits():
-    multipliers = list(range(10,1,-1))
+    len_multipliers = len(verified_cpf) + 1
+    multipliers = list(range(len_multipliers,1,-1))
     result = 0
 
-    for index in range(9):
-        product = int(cpf[index]) * multipliers[index]
+    for index in range(len(verified_cpf)):
+        product = int(verified_cpf[index]) * multipliers[index]
         result += product    
 
     _, remainder = divmod(result, 11)
@@ -33,6 +43,9 @@ def validate_entry():
         return cpf
 
 cpf = validate_entry()
-first_check_digit = calculate_digits()
 
-print('First check digit:',first_check_digit)
+verified_cpf = cpf[0:9]
+verified_cpf += calculate_digits()
+verified_cpf += calculate_digits()
+
+validate_cpf()
